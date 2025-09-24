@@ -1,11 +1,15 @@
 name: CI Frontend
-
 on:
   push:
     branches: [ main ]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/ci-frontend.yml'
   pull_request:
     branches: [ main ]
-  workflow_dispatch: {}
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/ci-frontend.yml'
 
 jobs:
   lint-test-build:
@@ -29,11 +33,13 @@ jobs:
         working-directory: frontend
         run: npm run lint
 
-      - name: Tests (vitest si présent)
+      # Si vous gardez Vitest :
+      - name: Tests (vitest)
         working-directory: frontend
         run: npm run test --if-present
 
-      - name: Audit (high only - non bloquant)
+      # Audit visible mais non bloquant (high seulement)
+      - name: Audit (high only)
         working-directory: frontend
         run: npm audit --audit-level=high || true
 
