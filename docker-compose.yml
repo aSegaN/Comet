@@ -1,4 +1,5 @@
 version: "3.9"
+
 services:
   db:
     image: postgres:17
@@ -15,29 +16,26 @@ services:
       timeout: 5s
       retries: 20
 
-
   api:
-    build: ../backend
-    env_file: ../.env
+    build: ./backend
+    env_file: ./.env
     depends_on:
       db:
         condition: service_healthy
     ports: ["8000:8000"]
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
     volumes:
-      - ../backend:/app
-
+      - ./backend:/app
 
   web:
-    build: ../frontend
-    env_file: ../.env
-    ports: ["3000:3000"]
+    build: ./frontend
+    env_file: ./.env
     depends_on:
       - api
-    volumes:
-      - ../frontend:/usr/src/app
+    ports: ["3000:3000"]
     command: ["npm", "run", "dev"]
-
+    volumes:
+      - ./frontend:/usr/src/app
 
 volumes:
   db_data:

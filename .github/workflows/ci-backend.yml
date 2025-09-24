@@ -4,26 +4,26 @@ on:
     branches: [ main ]
     paths:
       - 'backend/**'
-      - 'ops/.github/workflows/ci-backend.yml'
+      - '.github/workflows/ci-backend.yml'
   pull_request:
     branches: [ main ]
     paths:
       - 'backend/**'
-      - 'ops/.github/workflows/ci-backend.yml'
+      - '.github/workflows/ci-backend.yml'
 
 jobs:
   lint-test-build:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: postgres:16
+        image: postgres:17
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: alarms
+          POSTGRES_USER: asegan
+          POSTGRES_PASSWORD: asega@1965
+          POSTGRES_DB: comet
         ports: ['5432:5432']
         options: >-
-          --health-cmd="pg_isready -U postgres"
+          --health-cmd="pg_isready -U asegan -d comet"
           --health-interval=10s --health-timeout=5s --health-retries=5
 
     steps:
@@ -56,7 +56,7 @@ jobs:
       - name: Unit tests (pytest)
         working-directory: backend
         env:
-          DATABASE_URL: postgresql+psycopg://postgres:postgres@localhost:5432/alarms
+          DATABASE_URL: postgresql+psycopg://asegan:asega%401965@db:5432/comet
           ENVIRONMENT: ci
           CORS_ORIGINS: http://localhost:3000
         run: pytest -q
