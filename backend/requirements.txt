@@ -8,3 +8,4 @@ psycopg[binary]>=3.2
 python-multipart>=0.0.9
 pandas>=2.2
 orjson>=3.10
+greenlet>=3.0

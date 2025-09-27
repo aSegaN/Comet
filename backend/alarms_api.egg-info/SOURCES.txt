@@ -7,5 +7,7 @@ alarms_api.egg-info/top_level.txt
 app/__init__.py
 app/config.py
 app/database.py
+app/ingest.py
 app/main.py
+tests/test_alarms_list.py
 tests/test_health.py
